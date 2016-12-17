@@ -35,8 +35,17 @@
 
             <div class="form-group">
                 @Html.LabelFor(m => m.Tags, new { @class = "control-label col-sm-4" })
+
                 <div class="col-sm-4">
                     @Html.TextBoxFor(m => m.Tags, new { @class = "form-control col-sm-4" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.YourSanta, new { @class = "control-label col-sm-4" })
+
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.YourSanta, new { @class = "form-control" })
                 </div>
             </div>
 

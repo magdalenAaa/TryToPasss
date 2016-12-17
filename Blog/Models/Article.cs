@@ -12,13 +12,18 @@ namespace Blog.Models
         {
             this.tags = new HashSet<Tag>();
         }
-        public Article(string authorId,string title, string Content,int categoryId)
+        public Article(string authorId, string title, string Content, int categoryId)
         {
             this.AuthorId = authorId;
             this.Title = title;
             this.Content = Content;
             this.CategoryId = categoryId;
             this.tags = new HashSet<Tag>();
+        }
+
+        public Article(string authorId, string title, string Content, int categoryId, string yourSanta) : this(authorId, title, Content, categoryId)
+        {
+            this.YourSanta = yourSanta;
         }
 
         [Key]
@@ -41,7 +46,7 @@ namespace Blog.Models
             return this.Author.UserName.Equals(name);
         }
 
-        [ForeignKey("Category")]
+
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
 
@@ -51,6 +56,11 @@ namespace Blog.Models
             set { this.tags = value; }
         }
 
+        [Required]
+        [StringLength(50)]
+        public string YourSanta { get; set; }
 
-    }    
+
+
+    }
 }

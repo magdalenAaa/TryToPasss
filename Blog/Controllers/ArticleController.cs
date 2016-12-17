@@ -68,7 +68,7 @@ namespace Blog.Controllers
                 model.Categories = database.Categories.OrderBy(c => c.Name).ToList();
 
                 return View(model);
-            }               
+            }
         }
 
         //
@@ -86,7 +86,7 @@ namespace Blog.Controllers
                         .First()
                         .Id;
 
-                    var article = new Article(authorId, model.Title, model.Content, model.CategoryId);
+                    var article = new Article(authorId, model.Title, model.Content, model.CategoryId, model.YourSanta);
 
                     this.SetArticleTags(article, model, database);
 
@@ -110,7 +110,7 @@ namespace Blog.Controllers
                 var article = database.Articles
                     .Where(a => a.Id == id).Include(a => a.Author).Include(a => a.Category).First();
 
-                if(!IsAutorizedToEdit(article))
+                if (!IsAutorizedToEdit(article))
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
                 }
@@ -162,14 +162,15 @@ namespace Blog.Controllers
                     return HttpNotFound();
                 }
                 var model = new ArticleViewModel();
-                    model.Id = article.Id;
-                    model.Title = article.Title;
-                    model.Content = article.Content;
-                    model.CategoryId = article.CategoryId;
-                    model.Categories = database.Categories.OrderBy(c => c.Name).ToList();
+                model.Id = article.Id;
+                model.Title = article.Title;
+                model.Content = article.Content;
+                model.CategoryId = article.CategoryId;
+                model.Categories = database.Categories.OrderBy(c => c.Name).ToList();
+                model.YourSanta = article.YourSanta;
 
                 model.Tags = string.Join(",", article.Tags.Select(t => t.Name));
-               
+
                 return View(model);
             }
         }
@@ -186,14 +187,15 @@ namespace Blog.Controllers
 
                     article.Title = model.Title;
                     article.Content = model.Content;
-                    article.CategoryId =  model.CategoryId;
+                    article.CategoryId = model.CategoryId;
                     this.SetArticleTags(article, model, database);
+                    article.YourSanta = model.YourSanta;
 
                     database.Entry(article).State = EntityState.Modified;
                     database.SaveChanges();
 
                     return RedirectToAction("Index");
-                }                                           
+                }
             }
             return View(model);
         }
@@ -204,7 +206,7 @@ namespace Blog.Controllers
 
             return isAdmin || isAuthor;
         }
-        private void SetArticleTags(Article article,ArticleViewModel model,BlogDbContext db)
+        private void SetArticleTags(Article article, ArticleViewModel model, BlogDbContext db)
         {
             //Split Tags
             var tagsStrings = model.Tags.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
@@ -214,13 +216,13 @@ namespace Blog.Controllers
             article.Tags.Clear();
 
             //Set new aricle tags
-            foreach(var tagString in tagsStrings)
+            foreach (var tagString in tagsStrings)
             {
                 //Get tag form db by its name
                 Tag tag = db.Tags.FirstOrDefault(t => t.Name.Equals(tagString));
 
                 //If the tag is null, create new tag
-                if(tag==null)
+                if (tag == null)
                 {
                     tag = new Tag() { Name = tagString };
                     db.Tags.Add(tag);
