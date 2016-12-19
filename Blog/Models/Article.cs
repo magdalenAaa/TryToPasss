@@ -21,11 +21,7 @@ namespace Blog.Models
             this.tags = new HashSet<Tag>();
         }
 
-        public Article(string authorId, string title, string Content, int categoryId, string yourSanta) : this(authorId, title, Content, categoryId)
-        {
-            this.YourSanta = yourSanta;
-        }
-
+    
         [Key]
         public int Id { get; set; }
 
@@ -56,9 +52,15 @@ namespace Blog.Models
             set { this.tags = value; }
         }
 
-        [Required]
+      
         [StringLength(50)]
-        public string YourSanta { get; set; }
+        public string SantaId { get; set; }
+
+        
+        public virtual ApplicationUser Santa { get; set; }
+
+
+
 
 
 
