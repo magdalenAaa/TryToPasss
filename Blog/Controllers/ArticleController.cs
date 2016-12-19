@@ -86,15 +86,31 @@ namespace Blog.Controllers
                         .First()
                         .Id;
 
-                    var article = new Article(authorId, model.Title, model.Content, model.CategoryId, model.YourSanta);
+                    var article = new Article(authorId, model.Title, model.Content, model.CategoryId);
 
                     this.SetArticleTags(article, model, database);
+
+                    var yourSanta = database.Users.Where(y => y.UserName == model.YourSanta || y.FullName == model.YourSanta).FirstOrDefault();
+
+                    if (yourSanta != null)
+                    {
+                        article.SantaId = yourSanta.Id;
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("Create");
+                    }
+                 
 
                     database.Articles.Add(article);
                     database.SaveChanges();
 
                     return RedirectToAction("Index");
+                  
+                  
                 }
+               
             }
 
             return View(model);
@@ -167,7 +183,7 @@ namespace Blog.Controllers
                 model.Content = article.Content;
                 model.CategoryId = article.CategoryId;
                 model.Categories = database.Categories.OrderBy(c => c.Name).ToList();
-                model.YourSanta = article.YourSanta;
+              
 
                 model.Tags = string.Join(",", article.Tags.Select(t => t.Name));
 
@@ -189,7 +205,7 @@ namespace Blog.Controllers
                     article.Content = model.Content;
                     article.CategoryId = model.CategoryId;
                     this.SetArticleTags(article, model, database);
-                    article.YourSanta = model.YourSanta;
+                
 
                     database.Entry(article).State = EntityState.Modified;
                     database.SaveChanges();

@@ -222,10 +222,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\background.jpg" />
+    <Content Include="Content\background_HomePage.jpg" />
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\HomePage.css" />
     <Content Include="Content\navbar.gif" />
-    <Content Include="Content\hat.png" />
     <Content Include="Content\Santa.png" />
+    <Content Include="Content\w.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
