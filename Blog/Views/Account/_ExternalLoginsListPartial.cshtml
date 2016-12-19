@@ -4,7 +4,8 @@
 
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
-    if (loginProviders.Count() == 0) {
+    if (loginProviders.Count() == 0)
+    {
         <div>
             <p>
                 There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
@@ -12,15 +13,33 @@
             </p>
         </div>
     }
-    else {
-        using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl })) {
+    else
+    {
+        using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
+        {
             @Html.AntiForgeryToken()
-            <div id="socialLoginList">
-                <p>
-                    @foreach (AuthenticationDescription p in loginProviders) {
-                        <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
+            <div class="row omb_row-sm-offset-3 omb_socialButtons">
+
+                @foreach (AuthenticationDescription p in loginProviders)
+                {
+                    string iconName = p.AuthenticationType.ToLower();
+
+                    if (iconName == "google")
+                    {
+                        iconName = "google-plus";
                     }
-                </p>
+
+                    <div class="col-xs-4 col-sm-2">
+                        <button type="submit" class="btn btn-block btn-lg omb_btn-@p.AuthenticationType.ToLower()"
+                           id="@p.AuthenticationType.ToLower()" name="provider"
+                           value="@p.AuthenticationType"
+                           title="Log in using your @p.Caption account">
+                            <i class="fa fa-@iconName visible-xs"></i>
+                            <span class="hidden-xs">@(p.AuthenticationType  == "Google" ? "Google+" : p.AuthenticationType)</span>
+                        </button>
+                    </div>
+                    @*<button type = "submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>*@
+                }
             </div>
         }
     }

@@ -7117,11 +7117,11 @@ article .author  {
 	line-height: 300%;
 }
 	
-.omb_login .omb_socialButtons a {
-	color: white; // In yourUse @body-bg 
+.omb_login .omb_socialButtons button {
+	color: white; 
 	opacity:0.9;
 }
-.omb_login .omb_socialButtons a:hover {
+.omb_login .omb_socialButtons button:hover {
     color: white;
 	opacity:1;    	
 }

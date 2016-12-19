@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Log in";
 }
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
 <div class="container">
 
@@ -10,28 +11,46 @@
         <div class="omb_login">
             <h3 class="omb_authTitle">Login or <a href="Register" id="registerLink">Sign up</a></h3>
             <div class="row omb_row-sm-offset-3 omb_socialButtons">
-                <div class="col-md-2">
-                    <section id="socialLoginForm">
-                        <div class="col-md-2">
-                            <section id="socialLoginForm">
-                                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-                            </section>
-                        </div>                        
-                    </section>
-                </div>
 
-                <div class="col-md-2">
-                    <a href="#" class="btn btn-lg btn-block omb_btn-twitter">
-                        <i class="fa fa-twitter visible-xs"></i>
-                        <span class="hidden-xs">Twitter</span>
-                    </a>
-                </div>
-                <div class="col-md-2">
-                    <a href="#" class="btn btn-lg btn-block omb_btn-google">
-                        <i class="fa fa-google-plus visible-xs"></i>
-                        <span class="hidden-xs">Google+</span>
-                    </a>
-                </div>
+                <section id="socialLoginForm">
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                </section>
+                @*<div class="col-md-2">
+                                        <section id="socialLoginForm">
+                                            <form action="/Account/ExternalLogin" method="post">
+                                                <input name="__RequestVerificationToken" type="hidden"
+                                                       value="-IpN8iceuaG31m3Y6TklXraFun1x8KdAMDGUIn6h83lT4C9cf3evIL4xNdtSZVM6lLDbwxI8-a_gCpzePxFY9Ixlfyd4VJfH2RbA_3IAwuk1">
+                                                <div id="socialLoginList">
+                                                    <p>
+                                                        <button type="submit" class="btn btn-lg btn-block omb_btn-facebook"
+                                                                 id="Facebook" name="provider"
+                                                                 value="Facebook"
+                                                                title="Log in using your Facebook account"><i class="fa fa-facebook visible-xs"></i>
+                    <span class="hidden-xs">Facebook</span></button>
+                                                    </p>
+                                                </div>
+                                            </form>
+                                        </section>
+                                    </div>
+
+                                    <div class="col-xs-4 col-sm-2">
+                                        <a href="#" class="btn btn-lg btn-block omb_btn-facebook">
+                                            <i class="fa fa-facebook visible-xs"></i>
+                                            <span class="hidden-xs">Facebook</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a href="#" class="btn btn-lg btn-block omb_btn-twitter">
+                                            <i class="fa fa-twitter visible-xs"></i>
+                                            <span class="hidden-xs">Twitter</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a href="#" class="btn btn-lg btn-block omb_btn-google">
+                                            <i class="fa fa-google-plus visible-xs"></i>
+                                            <span class="hidden-xs">Google+</span>
+                                        </a>
+                                    </div>*@
             </div>
             <div class="row omb_row-sm-offset-3 omb_loginOr">
                 <div class="col-xs-12 col-sm-6">
@@ -39,25 +58,25 @@
                     <span class="omb_spanOr">or</span>
                 </div>
             </div>
-            </div>
+        </div>
 
 
 
 
 
-            @Html.Partial("_SantaPartial")
-      
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @Html.Partial("_SantaPartial")
+
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-sm-4 control-label" })
-                    <div class="col-sm-4">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                 </div>
+            </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Password, new { @class = "col-sm-4 control-label" })
                     <div class="col-sm-4">
@@ -81,9 +100,10 @@
                     </div>
 
                 </div>
-            }
-        </div>
-    
+        }
+    </div>
+
+
 </div>
 
 @section Scripts {
