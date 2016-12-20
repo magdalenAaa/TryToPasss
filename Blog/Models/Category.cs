@@ -21,7 +21,7 @@ namespace Blog.Models
 
         [Required]
         [Index(IsUnique = true)]
-        [StringLength(20)]
+        [StringLength(50)]
         public string Name { get; set; }
 
         public virtual ICollection<Article> Articles { get; set; }        

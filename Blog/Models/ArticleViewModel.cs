@@ -30,7 +30,7 @@ namespace Blog.Models
         public string Tags { get; set; }
 
         [DisplayName("Your Santa")]
-        [Required]
+        [Required(ErrorMessage = "Please enter how many Stream Entries are displayed per page.")]
         [StringLength(50)]
         public string YourSanta { get; set; }
 
